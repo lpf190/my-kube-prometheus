@@ -1,0 +1,29 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: alert-webhook-dingtalk
+  namespace: monitoring
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: alert-webhook-dingtalk
+    spec:
+      containers:
+        - name: alert-webhook-dingtalk
+          image: timonwong/prometheus-webhook-dingtalk:v0.3.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - --ding.profile=webhook01=https://oapi.dingtalk.com/robot/send?access_token=b5272a5cda10e08ce83e6780e18d9c811ae7e4123f8cf0eac136afe05d8de74e
+          ports:
+            - name: web
+              containerPort: 8060
+          resources:
+            requests:
+              memory: 30Mi
+              cpu: 100m
+            limits:
+              memory: 50Mi
+              cpu: 200m
