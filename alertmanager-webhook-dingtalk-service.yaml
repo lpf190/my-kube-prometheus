@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alert-webhook-dingtalk
+  namespace: monitoring
+  labels:
+    k8s-app: alert-webhook-dingtalk
+ # annotations:
+  #  prometheus.io/probe.tcp: 'true'
+spec:
+  ports:
+    - name: web
+      port: 8060
+      targetPort: web
+      protocol: TCP
+  selector:
+    k8s-app: alert-webhook-dingtalk
